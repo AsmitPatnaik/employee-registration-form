@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, select, button {
+            margin: 10px 0;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Employee Details</h2>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Enter employee name" required><br>
+
+        <label for="empID">Employee ID:</label>
+        <input type="text" id="empID" placeholder="Enter employee ID" required><br>
+
+        <label>Gender:</label>
+        <input type="radio" id="male" name="gender" value="Male">
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="Female">
+        <label for="female">Female</label><br>
+
+        <label for="department">Department:</label>
+        <select id="department">
+            <option value="HR">HR</option>
+            <option value="Finance">Finance</option>
+            <option value="IT">IT</option>
+            <option value="Marketing">Marketing</option>
+        </select><br>
+
+        <label for="basicSalary">Basic Salary:</label>
+        <input type="number" id="basicSalary" placeholder="Enter basic salary" required><br>
+
+        <label for="hra">HRA:</label>
+        <input type="number" id="hra" placeholder="Enter HRA" required><br>
+
+        <label for="allowances">Allowances:</label>
+        <input type="number" id="allowances" placeholder="Enter allowances" required><br>
+
+        <button type="button" onclick="showDetails()">Show Details</button>
+        <button type="button" onclick="showGrossSalary()">Show Gross Salary</button>
+        <button type="button" onclick="showIncomeCategory()">Show Income Category</button>
+    </form>
+
+    <p id="details"></p>
+    <p id="grossSalary"></p>
+    <p id="incomeCategory"></p>
+
+    <script>
+        function showDetails() {
+            const name = document.getElementById("name").value;
+            const empID = document.getElementById("empID").value;
+            const gender = document.querySelector('input[name="gender"]:checked')?.value || "Not specified";
+            const department = document.getElementById("department").value;
+
+            const detailsParagraph = document.getElementById("details");
+            detailsParagraph.innerText = `Employee Details: 
+            Name: ${name}, Employee ID: ${empID}, Gender: ${gender}, Department: ${department}`;
+        }
+
+        function showGrossSalary() {
+            const basicSalary = parseFloat(document.getElementById("basicSalary").value) || 0;
+            const hra = parseFloat(document.getElementById("hra").value) || 0;
+            const allowances = parseFloat(document.getElementById("allowances").value) || 0;
+
+            const grossSalary = basicSalary + hra + allowances;
+
+            const grossSalaryParagraph = document.getElementById("grossSalary");
+            grossSalaryParagraph.innerText = `Gross Salary: ${grossSalary}`;
+        }
+
+        function showIncomeCategory() {
+            const basicSalary = parseFloat(document.getElementById("basicSalary").value) || 0;
+            const hra = parseFloat(document.getElementById("hra").value) || 0;
+            const allowances = parseFloat(document.getElementById("allowances").value) || 0;
+
+            const grossSalary = basicSalary + hra + allowances;
+
+            let incomeCategory = "";
+            switch (true) {
+                case grossSalary > 300000:
+                    incomeCategory = "High Income Group";
+                    break;
+                case grossSalary >= 100000 && grossSalary <= 300000:
+                    incomeCategory = "Medium Income Group";
+                    break;
+                case grossSalary < 100000:
+                    incomeCategory = "Low Income Group";
+                    break;
+                default:
+                    incomeCategory = "Not defined";
+            }
+
+            const incomeCategoryParagraph = document.getElementById("incomeCategory");
+            incomeCategoryParagraph.innerText = `Income Category: ${incomeCategory}`;
+        }
+    </script>
+</body>
+</html>
